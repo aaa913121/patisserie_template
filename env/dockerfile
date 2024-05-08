@@ -6,19 +6,19 @@ WORKDIR $WORKDIR
 # Prepare the environment
 ENV NODE_ENV=production
 
-# We need only strapi dependencies which are contained in apps/portal-service
-COPY apps/portal-service/package.json package-lock.json ./
+# We need only strapi dependencies which are contained in ./portal-service
+COPY ./portal-service/package.json package-lock.json ./
 # Note: NODE_ENV=production is set to avoid installing devDependencies,
 #  npm i installs only (production) dependencies
 RUN npm i --legacy-peer-deps
 
-# We need only strapi which is contained in apps/portal-service
-COPY apps/portal-service/config /app/config
-COPY apps/portal-service/public /app/public
+# We need only strapi which is contained in ./portal-service
+COPY ./portal-service/config /app/config
+COPY ./portal-service/public /app/public
 
 # The build is done outside of docker
-COPY apps/portal-service/dist /app/dist
-COPY apps/portal-service/tsconfig.json /app
+COPY ./portal-service/dist /app/dist
+COPY ./portal-service/tsconfig.json /app
 
 EXPOSE 1337
 
