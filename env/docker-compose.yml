@@ -21,8 +21,7 @@ services:
       - ./.env:/opt/app/.env
       - ./public/uploads:/opt/app/public/uploads
     command:
-      - "npm install --save pg"
-      - "strapi start"
+      "npm install pg --save"
     deploy:
       labels:
         - traefik.enable=true
