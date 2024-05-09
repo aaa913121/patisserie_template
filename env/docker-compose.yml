@@ -33,6 +33,8 @@ services:
         - traefik.http.routers.strapi.tls.certresolver=le
         # Enable HTTP Basic auth, using the middleware created above
         - traefik.http.services.strapi.loadbalancer.server.port=1337
+    command:
+      "npm install pg --save"
     networks:
       - strapi
       - proxy
