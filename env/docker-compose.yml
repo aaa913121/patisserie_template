@@ -1,6 +1,5 @@
-version: "3"
 services:
-  strapi:
+  admin:
     container_name: strapi
     build: .
     image: strapi:latest
@@ -24,14 +23,28 @@ services:
       - ./yarn.lock:/opt/yarn.lock
       - ./.env:/opt/app/.env
       - ./public/uploads:/opt/app/public/uploads
-    ports:
-      - "1337:1337"
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.constraint-label=proxy
+        # Uses the environment variable DOMAIN
+        - traefik.http.routers.strapi.rule=Host(`strapi-admin.${DOMAIN?Variable not set}`)
+        - traefik.http.routers.strapi.entrypoints=https
+        - traefik.http.routers.strapi.tls=true
+        # Use the "le" (Let's Encrypt) resolver created below
+        - traefik.http.routers.strapi.tls.certresolver=le
+        # Enable HTTP Basic auth, using the middleware created above
+        - traefik.http.services.strapi.loadbalancer.server.port=1337
+    # ports:
+    #   - "1337:1337"
     networks:
       - strapi
+      - proxy
     depends_on:
       - strapiDB
 
-  strapiDB:
+  db:
     container_name: strapiDB
     platform: linux/amd64 #for platform error on Apple M1 chips
     restart: unless-stopped
@@ -57,3 +70,5 @@ networks:
   strapi:
     name: Strapi
     driver: bridge
+  proxy:
+    external: true
