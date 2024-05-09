@@ -17,12 +17,12 @@ services:
       APP_KEYS: ${APP_KEYS}
       NODE_ENV: ${NODE_ENV}
     volumes:
-      - ./portal-service/config:/opt/app/config
-      - ./portal-service/src:/opt/app/src
-      - ./portal-service/package.json:/opt/package.json
-      - ./portal-service/package-lock.json:/opt/package-lock.json
-      - ./.env:/opt/app/.env
-      - ./public/uploads:/opt/app/public/uploads
+      - ./portal-service/config:/app/config
+      - ./portal-service/src:/app/src
+      - ./portal-service/package.json:/package.json
+      - ./portal-service/package-lock.json:/package-lock.json
+      - ./.env:/app/.env
+      - ./public/uploads:/app/public/uploads
     ports:
       - "1337:1337"
     networks:

@@ -18,8 +18,8 @@ COPY ./portal-service/config /app/config
 COPY ./portal-service/public /app/public
 
 # The build is done outside of docker
-# COPY ./portal-service/dist /app/dist
-# COPY tsconfig.json /app
+COPY ./portal-service/dist /app/dist
+COPY ./portal-service/tsconfig.json /app
 
 EXPOSE 1337
 
