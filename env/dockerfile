@@ -8,7 +8,7 @@ ENV NODE_ENV="development npm run build"
 
 # We need only strapi dependencies which are contained in ./portal-service
 COPY ./portal-service/package.json ./
-COPY ./portal-service/yarn.lock ./
+COPY ./portal-service/package-lock.json ./
 # Note: NODE_ENV=production is set to avoid installing devDependencies,
 #  npm i installs only (production) dependencies
 RUN npm i --legacy-peer-deps
