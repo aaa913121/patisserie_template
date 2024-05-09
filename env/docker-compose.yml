@@ -20,9 +20,7 @@ services:
       - ./package-lock.json:/package-lock.json
       - ./.env:/opt/app/.env
       - ./public/uploads:/opt/app/public/uploads
-    command: >
-      - "npm install pg --save"
-      - "npm run develop"
+    command: npm install pg --save && npm run develop
     deploy:
       labels:
         - traefik.enable=true
