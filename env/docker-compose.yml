@@ -1,6 +1,5 @@
 services:
   admin:
-    container_name: strapi
     build: .
     image: strapi:latest
     restart: unless-stopped
@@ -68,7 +67,7 @@ volumes:
 
 networks:
   strapi:
-    name: Strapi
+    name: strapi
     driver: bridge
   proxy:
     external: true
