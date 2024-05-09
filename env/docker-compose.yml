@@ -20,6 +20,7 @@ services:
       - ./package-lock.json:/package-lock.json
       - ./.env:/opt/app/.env
       - ./public/uploads:/opt/app/public/uploads
+    command: npm install --save pg && strapi start
     deploy:
       labels:
         - traefik.enable=true
