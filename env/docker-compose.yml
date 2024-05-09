@@ -4,7 +4,7 @@ services:
     build: .
     image: my-strapi:latest
     restart: unless-stopped
-    env_file: .env
+    env_file: ./portal-service/.env
     environment:
       DATABASE_CLIENT: ${DATABASE_CLIENT}
       DATABASE_HOST: strapiDB
@@ -21,7 +21,7 @@ services:
       - ./portal-service/src:/app/src
       - ./portal-service/package.json:/package.json
       - ./portal-service/package-lock.json:/package-lock.json
-      - ./.env:/app/.env
+      - ./portal-service/.env:/app/.env
       - ./public/uploads:/app/public/uploads
     ports:
       - "1337:1337"
@@ -49,17 +49,17 @@ services:
     networks:
       - strapi
 
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4
-    restart: unless-stopped
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-    ports:
-      - "5050:80"
-    networks:
-      - strapi
+  # pgadmin:
+  #   container_name: pgadmin
+  #   image: dpage/pgadmin4
+  #   restart: unless-stopped
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+  #     PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+  #   ports:
+  #     - "5050:80"
+  #   networks:
+  #     - strapi
 
   nginx:
     container_name: nginx
