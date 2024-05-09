@@ -68,6 +68,6 @@ volumes:
 networks:
   strapi:
     name: strapi
-    driver: bridge
+    driver: overlay
   proxy:
     external: true
