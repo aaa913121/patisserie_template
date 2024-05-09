@@ -4,7 +4,7 @@ ARG WORKDIR=/app
 WORKDIR $WORKDIR
 
 # Prepare the environment
-ENV NODE_ENV=production
+ENV NODE_ENV="development npm run build"
 
 # We need only strapi dependencies which are contained in ./portal-service
 COPY ./portal-service/package.json ./
