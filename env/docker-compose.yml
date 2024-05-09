@@ -1,10 +1,10 @@
 services:
-  admin:
+  strapi:
     image: strapi:latest
     env_file: .env
     environment:
       DATABASE_CLIENT: postgres
-      DATABASE_HOST: db
+      DATABASE_HOST: strapiDB
       DATABASE_PORT: ${DATABASE_PORT}
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USERNAME: ${DATABASE_USERNAME}
@@ -39,7 +39,7 @@ services:
     depends_on:
       - strapiDB
 
-  db:
+  strapiDB:
     env_file: .env
     image: postgres:12.0-alpine
     environment:
