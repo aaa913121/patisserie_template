@@ -2,7 +2,7 @@ services:
   strapi:
     container_name: strapi
     build: .
-    image: my-strapi:latest
+    image: strapi:latest
     restart: unless-stopped
     env_file: ./portal-service/.env
     environment:
