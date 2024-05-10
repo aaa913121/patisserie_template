@@ -23,9 +23,9 @@ services:
     # working_dir: /opt
     command: sh -c "npm i -g npm@latest && npm install pg --save && npm run develop"
     deploy:
-      placement:
-        constraints:
-          - node.labels.strapi.certs-data == true
+      # placement:
+      #   constraints:
+      #     - node.labels.strapi.certs-data == true
       labels:
         - traefik.enable=true
         - traefik.docker.network=proxy
@@ -69,6 +69,5 @@ networks:
   strapi:
     name: strapi
     driver: overlay
-    attachable: true
   proxy:
     external: true
