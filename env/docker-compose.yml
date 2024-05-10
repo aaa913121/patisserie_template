@@ -5,14 +5,14 @@ services:
     environment:
       DATABASE_CLIENT: postgres
       DATABASE_HOST: strapiDB
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
-      APP_KEYS: ${APP_KEYS}
-      NODE_ENV: ${NODE_ENV}
+      DATABASE_PORT: 5432
+      DATABASE_NAME: strapi
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root
+      JWT_SECRET: fb3+kvCRMREcuBm7oiPHSQ==
+      ADMIN_JWT_SECRET: fb3+kvCRMREcuBm7oiPHSQ==
+      APP_KEYS: ZuIeihVXWggRdQBEtPSxiQ==,Cy3Td4Ns90wCZlqs228UoA==,rz7xfvv1vOM+pD0tSkiJDA==,OnfJMhjL6xT8gpcq9Y0S0w==
+      NODE_ENV: develop
     volumes:
       # - ./config:/opt/app/config
       # - ./src:/opt/app/src
@@ -23,6 +23,9 @@ services:
     # working_dir: /opt
     command: sh -c "npm i -g npm@latest && npm install pg --save && npm run develop"
     deploy:
+      placement:
+        constraints:
+          - node.labels.strapi.certs-data == true
       labels:
         - traefik.enable=true
         - traefik.docker.network=proxy
@@ -43,15 +46,17 @@ services:
 
   strapiDB:
     env_file: .env
-    image: postgres:12.0-alpine
-    environment:
-      POSTGRES_USER: ${DATABASE_USERNAME}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-      POSTGRES_DB: ${DATABASE_NAME}
+    image: sameersbn/postgresql:14-20230628
     volumes:
       - strapi-data:/var/lib/postgresql/data/ #using a volume
-      #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
-
+    environment:
+      - DB_USER=root
+      - DB_PASS=root
+      - DB_NAME=strapi
+    deploy:
+      placement:
+        constraints:
+          - node.labels.strapi.postgresql-data == true
     ports:
       - "5432:5432"
     networks:
