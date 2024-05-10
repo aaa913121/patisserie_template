@@ -1,6 +1,6 @@
 services:
   strapi:
-    image: strapi/strapi:latest
+    image: my-strapi:latest
     env_file: .env
     environment:
       DATABASE_CLIENT: postgres
