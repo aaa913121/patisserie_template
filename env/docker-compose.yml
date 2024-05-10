@@ -20,7 +20,7 @@ services:
       - ./package-lock.json:/opt/package-lock.json
       - ./.env:/opt/app/.env
       - ./public/uploads:/opt/app/public/uploads
-    working_dir: /opt
+    # working_dir: /opt
     command: sh -c "npm i -g npm@latest && npm install pg --save && npm run develop"
     deploy:
       labels:
