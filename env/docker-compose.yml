@@ -69,5 +69,6 @@ networks:
   strapi:
     name: strapi
     driver: overlay
+    attachable: true
   proxy:
     external: true
