@@ -18,6 +18,10 @@ RUN npm i --legacy-peer-deps
 COPY ./config /app/config
 COPY ./public /app/public
 
+# The build is done outside of docker
+COPY ./portal-service/dist /app/dist
+COPY tsconfig.json /app
+
 EXPOSE 1337
 
 # For debugging; uncomment below to run indefinitely without errors
