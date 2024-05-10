@@ -21,7 +21,9 @@ services:
       - ./.env:/opt/app/.env
       - ./public/uploads:/opt/app/public/uploads
     working_dir: /opt
-    command: sh -c "npm install pg --save && npm run develop"
+    command: >
+     - sh -c "npm i -g npm@latest"
+     - sh -c "npm install pg --save && npm run develop"
     deploy:
       labels:
         - traefik.enable=true
