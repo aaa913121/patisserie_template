@@ -53,10 +53,10 @@ services:
       - DB_USER=root
       - DB_PASS=root
       - DB_NAME=strapi
-    deploy:
-      placement:
-        constraints:
-          - node.labels.strapi.postgresql-data == true
+    # deploy:
+    #   placement:
+    #     constraints:
+    #       - node.labels.strapi.postgresql-data == true
     ports:
       - "5432:5432"
     networks:
