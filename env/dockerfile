@@ -1,19 +1,27 @@
 FROM node:20-alpine
-# Installing libvips-dev for sharp Compatibility
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
+
+ARG WORKDIR=/app
+WORKDIR $WORKDIR
+
+# Prepare the environment
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
 
-WORKDIR /opt/
-COPY package.json package-lock.json ./
-RUN npm install -g node-gyp
-RUN npm config set fetch-retry-maxtimeout 600000 -g && npm install
-ENV PATH /opt/node_modules/.bin:$PATH
+# We need only strapi dependencies which are contained in ./portal
+COPY ./portal/package.json ./
+COPY ./portal/package-lock.json ./
+# Note: NODE_ENV=production is set to avoid installing devDependencies,
+#  npm i installs only (production) dependencies
+RUN npm i --legacy-peer-deps
 
-WORKDIR /opt/app
-COPY . .
-RUN chown -R node:node /opt/app
-USER node
-RUN ["npm", "run", "build"]
+# We need only strapi which is contained in ./portal
+COPY ./portal/config /app/config
+COPY ./portal/public /app/public
+
 EXPOSE 1337
-CMD ["npm", "run", "develop"]
+
+# For debugging; uncomment below to run indefinitely without errors
+# CMD ["tail", "-f", "/dev/null"]
+
+# Original command
+CMD ["npm", "start"]
